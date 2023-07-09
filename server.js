@@ -21,7 +21,6 @@ export default {
       if (!env?.SESSION_SECRET) {
         throw new Error('SESSION_SECRET environment variable is not set');
       }
-
       const waitUntil = (p) => executionContext.waitUntil(p);
       const [cache, session] = await Promise.all([
         caches.open('hydrogen'),
