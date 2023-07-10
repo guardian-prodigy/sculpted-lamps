@@ -3,12 +3,7 @@ import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
 
-import {
-  ProductSwimlane,
-  FeaturedCollections,
-  Hero,
-  TidioChatBot,
-} from '~/components';
+import {ProductSwimlane, FeaturedCollections, Hero} from '~/components';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getHeroPlaceholder} from '~/lib/placeholders';
 import {seoPayload} from '~/lib/seo.server';
@@ -152,7 +147,6 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-      <TidioChatBot />
     </>
   );
 }
