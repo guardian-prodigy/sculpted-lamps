@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 
 /**
@@ -28,7 +28,7 @@ export function ProductGallery({media, className}) {
 
   return (
     <div className={className}>
-      <div className="main-image-container">
+      <div className="main-image-container swimlane">
         {selectedImage && selectedImage.__typename === 'MediaImage' && (
           <Image
             data={selectedImage.image}

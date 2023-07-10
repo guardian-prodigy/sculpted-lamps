@@ -95,7 +95,6 @@ export default function Product() {
   const {product, shop, recommended} = useLoaderData();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
-
   return (
     <>
       <Section className="px-0 md:px-8 lg:px-12 ProductPageContainer">
@@ -135,7 +134,7 @@ export default function Product() {
         {descriptionHtml && (
           <ProductDetail
             title="Product Details"
-            content={descriptionHtml}
+            content={title}
             className="product-description"
           />
         )}

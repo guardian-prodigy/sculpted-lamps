@@ -1,13 +1,13 @@
 import {ProductCard, Section} from '~/components';
 
 const mockProducts = {
-  nodes: new Array(12).fill(''),
+  nodes: new Array(4).fill(''),
 };
 
 export function ProductSwimlane({
   title = 'Featured Products',
   products = mockProducts,
-  count = 12,
+  count = 4,
   ...props
 }) {
   return (

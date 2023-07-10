@@ -6,12 +6,10 @@ export const ParticlesContainer = () => {
   const [loading, setLoading] = useState(true);
 
   const particlesInit = useCallback(async (particles) => {
-    console.log(particles);
     await loadFull(particles);
   }, []);
 
   const particlesLoaded = useCallback(async (container) => {
-    console.log(container);
   }, []);
   useEffect(() => {
     setLoading(false);
@@ -28,7 +26,7 @@ export const ParticlesContainer = () => {
       options={{
         fullScreen: {
           enable: true,
-          zIndex: -999,
+          zIndex: -9299,
         },
         particles: {
           number: {

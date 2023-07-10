@@ -25,19 +25,23 @@ import {
 import {useIsHomePath} from '~/lib/utils';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
-
+import {MyComponent} from '~/components/MyComponent';
+import {MyContextProvider} from '~/Context/CarouselContext';
 export function Layout({children, layout}) {
   const {headerMenu, footerMenu} = layout;
   return (
     <>
+      <ParticlesContainer />
       <div className="flex flex-col min-h-screen">
-        <ParticlesContainer />
         <div className="">
           <a href="#mainContent" className="sr-only">
             Skip to content
           </a>
         </div>
         {headerMenu && <Header title={layout.shop.name} menu={headerMenu} />}
+        <MyContextProvider>
+          <MyComponent />
+        </MyContextProvider>
         <main role="main" id="mainContent" className="flex-grow">
           {children}
         </main>
@@ -214,6 +218,7 @@ function DesktopHeader({isHome, menu, openCart, title}) {
   return (
     <header
       role="banner"
+      id="navbar-desktop"
       className={`${
         isHome
           ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
@@ -365,8 +370,7 @@ function Footer({menu}) {
       <div
         className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-${itemsCount}`}
       >
-        &copy; {new Date().getFullYear()} / Shopify, Inc. Hydrogen is an MIT
-        Licensed Open Source project.
+        &copy; Sculpted Lamps {new Date().getFullYear()}. All Rights Reserved.
       </div>
     </Section>
   );
