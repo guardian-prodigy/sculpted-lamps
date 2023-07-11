@@ -22,5 +22,5 @@ export {Grid} from './Grid';
 export {FeaturedProducts} from './FeaturedProducts';
 export {AddToCartButton} from './AddToCartButton';
 export {ParticlesContainer} from './Particles';
-
+export {TidioChatBot} from './Bot/TidioChatBot';
 export * from './Icon';

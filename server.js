@@ -38,6 +38,7 @@ export default {
         privateStorefrontToken: env.PRIVATE_STOREFRONT_API_TOKEN,
         storeDomain: env.PUBLIC_STORE_DOMAIN,
         storefrontId: env.PUBLIC_STOREFRONT_ID,
+        TidioChatBot: env.TIDIO_CHAT_BOT_API_TOKEN,
         storefrontHeaders: getStorefrontHeaders(request),
       });
 
@@ -75,3 +76,4 @@ export default {
     }
   },
 };
+
