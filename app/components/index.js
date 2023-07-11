@@ -23,4 +23,5 @@ export {FeaturedProducts} from './FeaturedProducts';
 export {AddToCartButton} from './AddToCartButton';
 export {ParticlesContainer} from './Particles';
 export {TidioChatBot} from './Bot/TidioChatBot';
+export {SkeletonLoader} from './SkeletonLoader';
 export * from './Icon';
