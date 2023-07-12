@@ -1,11 +1,12 @@
-import React from 'react';
-import Skeleton from 'react-loading-skeleton';
-
 export const SkeletonLoader = () => {
   return (
     <div className="skeleton-loader">
-      <Skeleton height={200} />
+      <div className="skeleton-image"></div>
+      <div className="skeleton-details">
+        <div className="skeleton-line"></div>
+        <div className="skeleton-line"></div>
+        <div className="skeleton-line"></div>
+      </div>
     </div>
   );
 };
-

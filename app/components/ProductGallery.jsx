@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 import {motion} from 'framer-motion';
 import {Image} from '@shopify/hydrogen';
+import {SkeletonLoader} from './index';
 
 export const ProductGallery = ({media, className}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,6 +27,11 @@ export const ProductGallery = ({media, className}) => {
       prevSlide === 0 ? media.length - 1 : prevSlide - 1,
     );
   };
+  useEffect(() => {
+    if (media) {
+      setIsLoading(false);
+    }
+  }, [media]);
 
   return (
     <div className={className}>
@@ -53,20 +59,17 @@ export const ProductGallery = ({media, className}) => {
                   exit={{opacity: 0, x: i > currentSlide ? 100 : -100}}
                   transition={{duration: 0.5}}
                 >
-                  {image && (
-                    <div className="image-wrapper">
-                      <Image
-                        data={image}
-                        alt={altText}
-                        className={`image ${isLoading ? 'skeleton' : ''}`}
-                        onLoad={handleImageLoad}
-                        sizes={
-                          ' (min- width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)'
-                        }
-                      />
-                    </div>
-                  )}
-                  
+                  <div className="image-wrapper">
+                    <Image
+                      data={image}
+                      alt={altText}
+                      className={`image`}
+                      onLoad={handleImageLoad}
+                      sizes={
+                        ' (min- width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)'
+                      }
+                    />
+                  </div>
                 </motion.div>
               );
             })}

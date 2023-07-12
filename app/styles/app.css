@@ -198,6 +198,10 @@ shop-pay-button {
   max-width: 1200px;
   height: auto;
   margin-top: 1rem;
+  background-color: rgba(39, 39, 39, 0.616); /* Adjust the opacity as needed */
+  backdrop-filter: blur(5px);
+  padding: 1.5rem;
+  border-radius: 10px;
 }
 .product-description {
   max-width: 40em;
@@ -215,6 +219,7 @@ shop-pay-button {
   max-width: 100%;
   overflow: hidden;
   background-color: transparent;
+  min-height: 40vh;
 }
 
 .carousel-grid {
@@ -271,7 +276,6 @@ shop-pay-button {
   overflow: hidden;
   border-radius: 10px;
   background-color: transparent;
-
 }
 
 .carousel-image {
@@ -284,7 +288,6 @@ shop-pay-button {
   position: relative;
   transition: opacity 0.3s ease-in-out;
   background-color: transparent;
-
 }
 
 .carousel-image.active {
@@ -369,8 +372,45 @@ shop-pay-button {
   background-color: yellow;
 }
 
-
 /* Product Gallery END */
+
+/* SSkeletonLoader START */
+
+.skeleton-loader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 40vh;
+}
+
+.skeleton-image {
+  width: 100px;
+  height: 100px;
+  background-color: #f3f3f3;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.skeleton-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-line {
+  width: 200px;
+  height: 16px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .skeleton-line {
+    width: 150px;
+  }
+}
+
+/* SSkeletonLoader END */
 
 .listbox {
   background-color: rgb(var(--color-contrast));
