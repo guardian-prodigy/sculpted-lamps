@@ -60,9 +60,13 @@ export const ProductGallery = ({media, className}) => {
                         alt={altText}
                         className={`image ${isLoading ? 'skeleton' : ''}`}
                         onLoad={handleImageLoad}
+                        sizes={
+                          ' (min- width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)'
+                        }
                       />
                     </div>
                   )}
+                  
                 </motion.div>
               );
             })}
