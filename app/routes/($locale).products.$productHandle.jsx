@@ -95,12 +95,13 @@ export default function Product() {
   const {product, shop, recommended} = useLoaderData();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
-
+  const selectedVariantImage = product.selectedVariant?.image;
   return (
     <>
       <Section className="px-0 md:px-8 lg:px-12 ProductPageContainer">
         <div className="ProductPage grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-2">
           <ProductGallery
+            selectedVariantImage={selectedVariantImage}
             media={media.nodes}
             className="w-full lg:col-span-1 images"
           />
@@ -157,8 +158,8 @@ export default function Product() {
 export function ProductForm() {
   const {product, analytics, storeDomain} = useLoaderData();
 
-  const [currentSearchParams] = useSearchParams();
-  const {location} = useNavigation();
+  const [currentSearchParams, setSearchParams] = useSearchParams();
+  const {location, navigate} = useNavigation();
 
   /**
    * We update `searchParams` with in-flight request data from `location` (if available)
@@ -208,13 +209,21 @@ export function ProductForm() {
     ...analytics.products[0],
     quantity: 1,
   };
+  const handleVariantSelection = (name, value) => {
+    const clonedSearchParams = new URLSearchParams(currentSearchParams);
+    clonedSearchParams.set(name, value);
 
+    setSearchParams(clonedSearchParams);
+
+    navigate(location.pathname + '?' + clonedSearchParams.toString());
+  };
   return (
     <div className="grid gap-10">
       <div className="grid gap-4">
         <ProductOptions
           options={product.options}
           searchParamsWithDefaults={searchParamsWithDefaults}
+          onVariantSelection={handleVariantSelection}
         />
         {selectedVariant && (
           <div className="grid items-stretch gap-4">

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 import {motion} from 'framer-motion';
 import {Image} from '@shopify/hydrogen';
 import {SkeletonLoader} from './index';
 
-export const ProductGallery = ({media, className}) => {
+export const ProductGallery = ({media, selectedVariantImage, className}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,11 +27,45 @@ export const ProductGallery = ({media, className}) => {
       prevSlide === 0 ? media.length - 1 : prevSlide - 1,
     );
   };
+
   useEffect(() => {
-    if (media) {
-      setIsLoading(false);
-    }
+    const imagePromises = media.map((med) => {
+      const image = med.__typename === 'MediaImage' ? med.image : null;
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = image?.url;
+      });
+    });
+
+    Promise.all(imagePromises)
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error preloading images:', error);
+        setIsLoading(false);
+      });
   }, [media]);
+
+  useEffect(() => {
+    if (selectedVariantImage && media.length > 0) {
+      setCurrentSlide(0);
+    }
+  }, [selectedVariantImage, media]);
+
+  const renderedMedia = useMemo(() => {
+    const updatedMedia = [...media];
+    if (selectedVariantImage) {
+      updatedMedia[0] = {
+        ...updatedMedia[0],
+        __typename: 'MediaImage',
+        image: selectedVariantImage,
+      };
+    }
+    return updatedMedia;
+  }, [media, selectedVariantImage]);
 
   return (
     <div className={className}>
@@ -41,7 +75,7 @@ export const ProductGallery = ({media, className}) => {
             <FiChevronLeft />
           </div>
           <div className="image-container">
-            {media.map((med, i) => {
+            {renderedMedia.map((med, i) => {
               const image = med.__typename === 'MediaImage' ? med.image : null;
               const altText =
                 med.__typename === 'MediaImage'
@@ -60,15 +94,19 @@ export const ProductGallery = ({media, className}) => {
                   transition={{duration: 0.5}}
                 >
                   <div className="image-wrapper">
-                    <Image
-                      data={image}
-                      alt={altText}
-                      className={`image`}
-                      onLoad={handleImageLoad}
-                      sizes={
-                        ' (min- width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)'
-                      }
-                    />
+                    {!isLoading && (
+                      <Image
+                        data={image}
+                        alt={altText}
+                        className={`image ${
+                          i === 0 && selectedVariantImage ? 'variant-image' : ''
+                        }`}
+                        onLoad={handleImageLoad}
+                        priority // Load all images in advance
+                        sizes="(min-width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)"
+                      />
+                    )}
+                    {isLoading && <SkeletonLoader />}
                   </div>
                 </motion.div>
               );
@@ -77,19 +115,18 @@ export const ProductGallery = ({media, className}) => {
           <div className="arrow arrow-right" onClick={handleNextSlide}>
             <FiChevronRight />
           </div>
-          <div className="dots" />
+          {media.length > 1 && (
+            <div className="dots">
+              {media.map((_, index) => (
+                <div
+                  key={index}
+                  className={`dot ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => handleDotClick(index)}
+                ></div>
+              ))}
+            </div>
+          )}
         </div>
-        {media.length > 1 && (
-          <div className="dots">
-            {media.map((_, index) => (
-              <div
-                key={index}
-                className={`dot ${currentSlide === index ? 'active' : ''}`}
-                onClick={() => handleDotClick(index)}
-              ></div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

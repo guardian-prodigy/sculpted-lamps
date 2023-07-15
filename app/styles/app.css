@@ -320,36 +320,6 @@ shop-pay-button {
   object-fit: contain;
   height: 100%;
 }
-
-.image.skeleton {
-  background-color: #f3f3f3;
-}
-
-.image.skeleton::before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.539),
-    transparent
-  );
-  background-repeat: no-repeat;
-  background-position: -200px 0;
-  animation: skeletonLoading 1.5s infinite linear;
-}
-
-@keyframes skeletonLoading {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
 .dots {
   grid-area: dots;
   display: flex;
@@ -380,7 +350,7 @@ shop-pay-button {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  min-height: 40vh;
+  aspect-ratio: 9/16;
 }
 
 .skeleton-image {
