@@ -89,9 +89,13 @@ shop-pay-button {
   input[type='search']::-webkit-search-results-decoration {
     -webkit-appearance: none;
   }
-
+a.variant-link {
+  padding: 0.45rem;
+  background: rgba(58, 58, 58, 0.765);
+  border-radius: 20px;
+}
   a.active {
-    @apply border-b;
+    background-color: rgb(var(--color-accent));
   }
 
   .prose {
@@ -192,7 +196,7 @@ shop-pay-button {
   display: grid;
   place-items: center;
   height: 100%;
-  padding: 1rem;
+  padding: 2rem;
 }
 .ProductPage {
   max-width: 1200px;
@@ -202,6 +206,14 @@ shop-pay-button {
   backdrop-filter: blur(5px);
   padding: 1.5rem;
   border-radius: 10px;
+}
+@media (max-width: 768px) {
+  .ProductPageContainer {
+    padding: 1rem;
+  }
+  .ProductPage {
+    padding: 1rem;
+  }
 }
 .product-description {
   max-width: 40em;

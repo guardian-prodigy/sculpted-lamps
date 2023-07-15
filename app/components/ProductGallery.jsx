@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useState, useMemo, useRef} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 import {motion} from 'framer-motion';
 import {Image} from '@shopify/hydrogen';
@@ -7,6 +7,8 @@ import {SkeletonLoader} from './index';
 export const ProductGallery = ({media, selectedVariantImage, className}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const containerRef = useRef(null);
+  const touchStartXRef = useRef(0);
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -26,6 +28,21 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
     setCurrentSlide((prevSlide) =>
       prevSlide === 0 ? media.length - 1 : prevSlide - 1,
     );
+  };
+
+  const handleTouchStart = (event) => {
+    touchStartXRef.current = event.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (event) => {
+    const touchEndX = event.changedTouches[0].clientX;
+    const touchDifference = touchStartXRef.current - touchEndX;
+
+    if (touchDifference > 50) {
+      handleNextSlide();
+    } else if (touchDifference < -50) {
+      handlePrevSlide();
+    }
   };
 
   useEffect(() => {
@@ -69,7 +86,12 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
 
   return (
     <div className={className}>
-      <div className="carousel">
+      <div
+        className="carousel"
+        ref={containerRef}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="carousel-grid">
           <div className="arrow arrow-left" onClick={handlePrevSlide}>
             <FiChevronLeft />
@@ -102,7 +124,7 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
                           i === 0 && selectedVariantImage ? 'variant-image' : ''
                         }`}
                         onLoad={handleImageLoad}
-                        priority // Load all images in advance
+                        withLoader // Load all images in advance
                         sizes="(min-width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)"
                       />
                     )}

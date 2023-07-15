@@ -411,6 +411,8 @@ function ProductOptionLink({
   const clonedSearchParams = new URLSearchParams(searchParams);
   clonedSearchParams.set(optionName, optionValue);
 
+  const isActive = searchParams.get(optionName) === optionValue; // Check if the current option is active
+
   return (
     <Link
       {...props}
@@ -418,6 +420,9 @@ function ProductOptionLink({
       prefetch="intent"
       replace
       to={`${path}?${clonedSearchParams.toString()}`}
+      className={`variant-link ${
+        isActive ? 'active' : '' // Add this line to apply the active class
+      }`}
     >
       {children ?? optionValue}
     </Link>
