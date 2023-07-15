@@ -6,13 +6,9 @@ export const ParticlesContainer = () => {
   const [loading, setLoading] = useState(true);
 
   const particlesInit = useCallback(async (particles) => {
-    console.log(particles);
     await loadFull(particles);
   }, []);
 
-  const particlesLoaded = useCallback(async (container) => {
-    console.log(container);
-  }, []);
   useEffect(() => {
     setLoading(false);
   }, [loadFull]);
@@ -24,7 +20,7 @@ export const ParticlesContainer = () => {
     <Particles
       id="tsparticle"
       init={particlesInit}
-      loaded={particlesLoaded}
+      loaded={loading}
       options={{
         fullScreen: {
           enable: true,
