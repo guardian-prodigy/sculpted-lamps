@@ -198,7 +198,7 @@ shop-pay-button {
   max-width: 1200px;
   height: auto;
   margin-top: 1rem;
-  background-color: rgba(39, 39, 39, 0.616); /* Adjust the opacity as needed */
+  background-color: rgba(39, 39, 39, 0.241); /* Adjust the opacity as needed */
   backdrop-filter: blur(5px);
   padding: 1.5rem;
   border-radius: 10px;
@@ -333,7 +333,7 @@ shop-pay-button {
   background-image: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.539),
     transparent
   );
   background-repeat: no-repeat;
@@ -374,7 +374,7 @@ shop-pay-button {
 
 /* Product Gallery END */
 
-/* SSkeletonLoader START */
+/* SkeletonLoader START */
 
 .skeleton-loader {
   display: flex;
@@ -410,7 +410,7 @@ shop-pay-button {
   }
 }
 
-/* SSkeletonLoader END */
+/* SkeletonLoader END */
 
 .listbox {
   background-color: rgb(var(--color-contrast));
