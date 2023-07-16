@@ -90,7 +90,9 @@ shop-pay-button {
   }
 
   a.active {
-    background-color: rgba(233, 229, 48, 0.794);
+    border: solid rgba(233, 229, 48, 0.794);
+    padding: 0.15rem;
+    border-radius: 20px;
   }
   .prose {
     h1,

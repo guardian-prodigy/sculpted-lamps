@@ -97,7 +97,6 @@ export default function Product() {
   const {shippingPolicy, refundPolicy} = shop;
   const selectedVariantImage = product.selectedVariant?.image;
 
-
   return (
     <>
       <Section className="px-0 md:px-8 lg:px-12 ProductPageContainer">
@@ -288,7 +287,7 @@ export function ProductForm({}) {
   );
 }
 
-function ProductOptions({options, searchParamsWithDefaults, }) {
+function ProductOptions({options, searchParamsWithDefaults}) {
   const closeRef = useRef(null);
   return (
     <>
@@ -385,7 +384,7 @@ function ProductOptions({options, searchParamsWithDefaults, }) {
                           optionValue={value}
                           searchParams={searchParamsWithDefaults}
                           className={clsx(
-                            'leading-none py-1 cursor-pointer transition-all duration-200 listbox',
+                            'variant-link leading-none py-1 cursor-pointer transition-all duration-200 listbox',
                             checked ? 'border-primary/50' : 'border-primary/0',
                           )}
                         />
@@ -427,7 +426,7 @@ function ProductOptionLink({
       prefetch="intent"
       replace
       to={`${path}?${clonedSearchParams.toString()}`}
-      className={`variant-link ${
+      className={`${
         isActive ? 'active' : '' // Add this line to apply the active class
       }`}
     >
