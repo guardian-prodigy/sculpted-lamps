@@ -66,11 +66,36 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
       });
   }, [media]);
 
+  const getNavbarHeight = () => {
+    const navbar = document.getElementById('navbar-header');
+    if (navbar) {
+      return navbar.offsetHeight;
+    }
+    return 0; // Return a default height if the navbar is not found
+  };
+  const scrollToCarousel = () => {
+    const navbarHeight = getNavbarHeight();
+    containerRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      offset: -navbarHeight, // Subtract navbar height from the scroll position
+    });
+  };
+
   useEffect(() => {
     if (selectedVariantImage && media.length > 0) {
       setCurrentSlide(0);
+
+      // Scroll to the carousel on variant change if it has loaded and is a mobile device
+      const isMobile = window.innerWidth < 768;
+      if (!isLoading && containerRef.current && isMobile) {
+        window.onload = () => {
+          scrollToCarousel();
+        };
+        
+      }
     }
-  }, [selectedVariantImage, media]);
+  }, [selectedVariantImage, media, isLoading]);
 
   const renderedMedia = useMemo(() => {
     const updatedMedia = [...media];
@@ -96,27 +121,25 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
           <div className="arrow arrow-left" onClick={handlePrevSlide}>
             <FiChevronLeft />
           </div>
-          <div className="image-container">
-            {renderedMedia.map((med, i) => {
-              const image = med.__typename === 'MediaImage' ? med.image : null;
-              const altText =
-                med.__typename === 'MediaImage'
-                  ? med.alt || 'Product image'
-                  : 'Product image';
+          {!isLoading ? (
+            <div className="image-container">
+              {renderedMedia.map((med, i) => {
+                const image =
+                  med.__typename === 'MediaImage' ? med.image : null;
+                const altText = med.__typename === 'MediaImage' && med.alt;
 
-              return (
-                <motion.div
-                  key={med.id || image?.id}
-                  className={`carousel-image ${
-                    currentSlide === i ? 'active' : ''
-                  }`}
-                  initial={{opacity: 0, x: i > currentSlide ? 100 : -100}}
-                  animate={{opacity: 1, x: 0}}
-                  exit={{opacity: 0, x: i > currentSlide ? 100 : -100}}
-                  transition={{duration: 0.5}}
-                >
-                  <div className="image-wrapper">
-                    {!isLoading && (
+                return (
+                  <motion.div
+                    key={med.id || image?.id}
+                    className={`carousel-image ${
+                      currentSlide === i ? 'active' : ''
+                    }`}
+                    initial={{opacity: 0, x: i > currentSlide ? 100 : -100}}
+                    animate={{opacity: 1, x: 0}}
+                    exit={{opacity: 0, x: i > currentSlide ? 100 : -100}}
+                    transition={{duration: 0.5}}
+                  >
+                    <div className="image-wrapper">
                       <Image
                         data={image}
                         alt={altText}
@@ -127,13 +150,14 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
                         withLoader // Load all images in advance
                         sizes="(min-width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)"
                       />
-                    )}
-                    {isLoading && <SkeletonLoader />}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ) : (
+            <SkeletonLoader />
+          )}
           <div className="arrow arrow-right" onClick={handleNextSlide}>
             <FiChevronRight />
           </div>

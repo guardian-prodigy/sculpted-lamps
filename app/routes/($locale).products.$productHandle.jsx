@@ -108,7 +108,7 @@ export default function Product() {
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:pt-nav hiddenScroll md:overflow-y-scroll">
             <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
               <div className="grid gap-2">
-                <Heading as="h1">{title}</Heading>
+                <Heading as="h3">{title}</Heading>
                 {vendor && (
                   <Text className={'opacity-50 font-medium'}>{vendor}</Text>
                 )}
@@ -228,7 +228,7 @@ export function ProductForm() {
         {selectedVariant && (
           <div className="grid items-stretch gap-4">
             {isOutOfStock ? (
-              <Button variant="secondary" disabled>
+              <Button variant="secondary" disabled >
                 <Text>Sold out</Text>
               </Button>
             ) : (

@@ -150,6 +150,7 @@ function MobileHeader({title, isHome, openCart, openMenu}) {
   return (
     <header
       role="banner"
+      id="navbar-header"
       className={`${
         isHome
           ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
@@ -214,6 +215,7 @@ function DesktopHeader({isHome, menu, openCart, title}) {
   return (
     <header
       role="banner"
+      id="navbar-header"
       className={`${
         isHome
           ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
