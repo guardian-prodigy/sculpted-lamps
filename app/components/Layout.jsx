@@ -20,7 +20,6 @@ import {
   Cart,
   CartLoading,
   Link,
-  ParticlesContainer,
 } from '~/components';
 import {useIsHomePath} from '~/lib/utils';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
@@ -30,8 +29,8 @@ export function Layout({children, layout}) {
   const {headerMenu, footerMenu} = layout;
   return (
     <>
+      {/* <ParticlesContainer /> */}
       <div className="flex flex-col min-h-screen">
-        <ParticlesContainer />
         <div className="">
           <a href="#mainContent" className="sr-only">
             Skip to content

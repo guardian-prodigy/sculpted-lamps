@@ -7,7 +7,6 @@ import {SkeletonLoader} from './index';
 export const ProductGallery = ({media, selectedVariantImage, className}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const containerRef = useRef(null);
   const touchStartXRef = useRef(0);
 
   const handleImageLoad = () => {
@@ -66,34 +65,9 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
       });
   }, [media]);
 
-  const getNavbarHeight = () => {
-    const navbar = document.getElementById('navbar-header');
-    if (navbar) {
-      return navbar.offsetHeight;
-    }
-    return 0; // Return a default height if the navbar is not found
-  };
-  const scrollToCarousel = () => {
-    const navbarHeight = getNavbarHeight();
-    containerRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      offset: -navbarHeight, // Subtract navbar height from the scroll position
-    });
-  };
-
   useEffect(() => {
     if (selectedVariantImage && media.length > 0) {
       setCurrentSlide(0);
-
-      // Scroll to the carousel on variant change if it has loaded and is a mobile device
-      const isMobile = window.innerWidth < 768;
-      if (!isLoading && containerRef.current && isMobile) {
-        window.onload = () => {
-          scrollToCarousel();
-        };
-        
-      }
     }
   }, [selectedVariantImage, media, isLoading]);
 
@@ -113,7 +87,6 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
     <div className={className}>
       <div
         className="carousel"
-        ref={containerRef}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -147,7 +120,7 @@ export const ProductGallery = ({media, selectedVariantImage, className}) => {
                           i === 0 && selectedVariantImage ? 'variant-image' : ''
                         }`}
                         onLoad={handleImageLoad}
-                        withLoader // Load all images in advance
+                        withloader="true" // Load all images in advance
                         sizes="(min-width: 1100px) 550px, (min-width: 990px) calc(55.0vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / 1 - 4rem)"
                       />
                     </div>

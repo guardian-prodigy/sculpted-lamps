@@ -96,23 +96,29 @@ export default function Product() {
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
   const selectedVariantImage = product.selectedVariant?.image;
+
+
   return (
     <>
       <Section className="px-0 md:px-8 lg:px-12 ProductPageContainer">
-        <div className="ProductPage grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-2">
-          <ProductGallery
-            selectedVariantImage={selectedVariantImage}
-            media={media.nodes}
-            className="w-full lg:col-span-1 images"
-          />
+        <div className="ProductPage grid items-start md:gap-6 lg:gap-20 lg:grid-cols-2">
+          <div className="w-full lg:col-span-1">
+            <Heading as="h3" className="lg:hidden h3">
+              {title}
+            </Heading>
+            <ProductGallery
+              selectedVariantImage={selectedVariantImage}
+              media={media.nodes}
+            />
+          </div>
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
-              <div className="grid gap-2">
-                <Heading as="h3">{title}</Heading>
-                {vendor && (
-                  <Text className={'opacity-50 font-medium'}>{vendor}</Text>
-                )}
-              </div>
+            <section className="flex flex-col w-full max-w-xl gap-8 md:mx-auto md:max-w-sm md:px-0">
+              <Heading as="h3" className="hidden lg:block">
+                {title}
+              </Heading>
+              {vendor && (
+                <Text className={'opacity-50 font-medium'}>{vendor}</Text>
+              )}
               <ProductForm />
               <div className="grid gap-4 py-4">
                 {shippingPolicy?.body && (
@@ -133,6 +139,7 @@ export default function Product() {
             </section>
           </div>
         </div>
+
         {descriptionHtml && (
           <ProductDetail
             title="Product Details"
@@ -155,7 +162,7 @@ export default function Product() {
   );
 }
 
-export function ProductForm() {
+export function ProductForm({}) {
   const {product, analytics, storeDomain} = useLoaderData();
 
   const [currentSearchParams, setSearchParams] = useSearchParams();
@@ -228,7 +235,7 @@ export function ProductForm() {
         {selectedVariant && (
           <div className="grid items-stretch gap-4">
             {isOutOfStock ? (
-              <Button variant="secondary" disabled >
+              <Button variant="secondary" disabled>
                 <Text>Sold out</Text>
               </Button>
             ) : (
@@ -281,7 +288,7 @@ export function ProductForm() {
   );
 }
 
-function ProductOptions({options, searchParamsWithDefaults}) {
+function ProductOptions({options, searchParamsWithDefaults, }) {
   const closeRef = useRef(null);
   return (
     <>

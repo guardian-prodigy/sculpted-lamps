@@ -21,7 +21,7 @@ import styles from './styles/app.css';
 import {DEFAULT_LOCALE, parseMenu, getCartId} from './lib/utils';
 import {useAnalytics} from './hooks/useAnalytics';
 
-import {Layout, TidioChatBot} from '~/components';
+import {Layout, ParticlesContainer, TidioChatBot} from '~/components';
 import {seoPayload} from '~/lib/seo.server';
 export const links = () => {
   return [
@@ -77,6 +77,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <ParticlesContainer />
         <TidioChatBot />
         <Layout
           key={`${locale.language}-${locale.country}`}

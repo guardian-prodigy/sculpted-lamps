@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import Particles from 'react-tsparticles';
 import {loadFull} from 'tsparticles';
 
-export const ParticlesContainer = () => {
+export const ParticlesContainer = React.memo(() => {
   const [loading, setLoading] = useState(true);
 
   const particlesInit = useCallback(async (particles) => {
@@ -139,4 +139,4 @@ export const ParticlesContainer = () => {
       }}
     />
   );
-};
+})
